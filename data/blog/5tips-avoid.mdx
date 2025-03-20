@@ -1,0 +1,107 @@
+---
+title: 5 Tips Developers Should Avoid in JavaScript
+date: '2025-03-20'
+tags: ['javascript', 'tips', 'best practices']
+draft: false
+summary: Learn about common pitfalls in JavaScript development and how to avoid them.
+---
+
+JavaScript is a powerful and flexible language, but it comes with its own set of pitfalls. Here are five tips that developers should avoid to write better JavaScript code.
+
+## 1. Avoid Using `var`
+
+Using `var` to declare variables can lead to unexpected behavior due to its function-scoping and hoisting characteristics. Instead, use `let` and `const` for block-scoped variables.
+
+```javascript
+// Bad
+var count = 1
+if (true) {
+  var count = 2 // This will overwrite the outer count
+}
+console.log(count) // 2
+
+// Good
+let count = 1
+if (true) {
+  let count = 2 // This is a different count
+}
+console.log(count) // 1
+```
+
+## 2. Avoid Implicit Type Coercion
+
+JavaScript performs implicit type coercion, which can lead to unexpected results. Always use strict equality (`===`) to avoid type coercion.
+
+```javascript
+// Bad
+console.log(1 == '1') // true
+
+// Good
+console.log(1 === '1') // false
+```
+
+## 3. Avoid Modifying the Prototype of Built-in Objects
+
+Modifying the prototype of built-in objects like `Array` and `Object` can lead to unpredictable behavior and conflicts with other code. Instead, use utility functions or libraries.
+
+```javascript
+// Bad
+Array.prototype.myCustomMethod = function () {
+  // Custom method
+}
+
+// Good
+function myCustomMethod(array) {
+  // Custom method
+}
+```
+
+## 4. Avoid Using Global Variables
+
+Global variables can lead to conflicts and hard-to-debug issues. Always declare variables within the scope they are needed.
+
+```javascript
+// Bad
+globalVar = 'I am global'
+
+// Good
+function myFunction() {
+  let localVar = 'I am local'
+}
+```
+
+## 5. Avoid Callback Hell
+
+Deeply nested callbacks can make code hard to read and maintain. Use Promises or async/await to handle asynchronous operations.
+
+```javascript
+// Bad
+doSomething(function (result) {
+  doSomethingElse(result, function (newResult) {
+    doAnotherThing(newResult, function (finalResult) {
+      console.log(finalResult)
+    })
+  })
+})
+
+// Good
+doSomething()
+  .then((result) => doSomethingElse(result))
+  .then((newResult) => doAnotherThing(newResult))
+  .then((finalResult) => console.log(finalResult))
+  .catch((error) => console.error(error))
+
+// Better
+async function myAsyncFunction() {
+  try {
+    const result = await doSomething()
+    const newResult = await doSomethingElse(result)
+    const finalResult = await doAnotherThing(newResult)
+    console.log(finalResult)
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+
+By avoiding these common pitfalls, you can write cleaner, more maintainable JavaScript code. Happy coding!
